@@ -5,4 +5,5 @@ from .models import Tri
 class TriSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Tri
-		fields = '__all__'
+		fields = ['of', 'symbol', 'client', 'defaut',
+				  'a_trier', 'bonnes', 'mauvaises', 'date', 'est_trie' ]

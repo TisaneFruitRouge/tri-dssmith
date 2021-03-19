@@ -10,3 +10,5 @@ class Tri(models.Model):
 	mauvaises = models.IntegerField(default=0)
 	date      = models.DateField(auto_now=True) 
 	est_trie  = models.BooleanField(default=False)
+
+	dans_excel = models.BooleanField(default=False)

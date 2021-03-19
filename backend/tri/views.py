@@ -25,7 +25,7 @@ class TriView(APIView):
 		if serializer.is_valid():
 			serializer.save()
 
-			new_excel_path = "../excel/"+str(data["date"])+"_"+data["of"]+".xlsx"
+			'''new_excel_path = "../excel/"+str(data["date"])+"_"+data["of"]+".xlsx"
 			new_workbook = xlsxwriter.Workbook(new_excel_path)
 			new_worksheet = new_workbook.add_worksheet()
 			
@@ -50,7 +50,7 @@ class TriView(APIView):
 				for col in range(len(list_data[row])):
 					new_worksheet.write(col, row, list_data[row][col])
 
-			new_workbook.close()
+			new_workbook.close()'''
 
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		
