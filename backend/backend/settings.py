@@ -126,22 +126,3 @@ STATIC_URL = '/static/'
 
 # django-cors
 CORS_ORIGIN_ALLOW_ALL = True
-
-# celery
-
-from celery.schedules import crontab
-from datetime import timedelta  
-
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
-
-
-CELERY_BEAT_SCHEDULE = {
-    "sample_task": {
-        "task": "tri.tasks.sample_task",
-        "schedule": timedelta(seconds=5),
-    },
-}
