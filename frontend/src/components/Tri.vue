@@ -114,7 +114,7 @@ export default {
 				date:Date.now(),
 				est_trie: est_trie.value,
 			})
-				.then(response=>{console.log(response)})
+				.then(response=>{console.log("sd")})
 				.catch(err=>{console.log('err:' +err)})
 			
 		}
