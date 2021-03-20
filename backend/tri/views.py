@@ -27,7 +27,6 @@ class TriView(APIView):
 		
 		if serializer.is_valid():
 			serializer.save()
-			print('ici')
 			# Création d fichier / Insertion dans le fichier excel 
 
 			current_date  = date.today()

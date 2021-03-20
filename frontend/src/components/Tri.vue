@@ -79,7 +79,7 @@ export default {
 		let erreur_bons_mauvais = ref(false);
 
 		let bool_erreur_champ = computed(()=>{
-			return (of.value=="" || symbole.value=="" || client.value=="" || defaut.value=="" || a_trier.value<=0);
+			return (of.value==="" || symbole.value==="" || client.value==="" || defaut.value==="" || a_trier.value<=0);
 		})
 
 		let bool_erreur_tri = computed(()=>{
@@ -92,6 +92,7 @@ export default {
 
 
 		let postTri = ()=>{
+			
 			if (bool_erreur_champ.value){ //si les champs ne sont pas remplis 
 				champs_non_remplis.value = true;
 			}
@@ -101,7 +102,7 @@ export default {
 				erreur_bons_mauvais.value = true;
 			}
 			else { erreur_bons_mauvais.value = false; } //autrement 
-			if (champs_non_remplis || erreur_bons_mauvais) {return;}
+			if (champs_non_remplis.value || erreur_bons_mauvais.value) {return;}
 
 			axios.post('http://localhost:8000/api/tris/',{
 				of:of.value,
