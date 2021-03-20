@@ -1,6 +1,8 @@
 <template>
 	<div id="container">
 
+		<Logo />
+
 		<div id="erreur-container">
 			<div v-if="champs_non_remplis" id="erreur-champs">
 				<p>Remplissez bien tout les champs</p>
@@ -14,35 +16,35 @@
 		<div id="post-tri-container">
 			<div class="tri-input-div">
 				<label for="of-input" class="tri-label">OF</label>
-				<input id="of-input" type="text" class="tri-input" v-model="of">
+				<input id="of-input" type="text" class="tri-input" v-model="of" />
 			</div>
 			<div class="tri-input-div">
 				<label for="symbol-input" class="tri-label">Symbole</label>
-				<input id="symbol-input" type="text" class="tri-input" v-model="symbole">
+				<input id="symbol-input" type="text" class="tri-input" v-model="symbole" />
 			</div>
 			<div class="tri-input-div">	
 				<label for="client-input" class="tri-label">Client</label>
-				<input id="client-input" type="text" class="tri-input" v-model="client">
+				<input id="client-input" type="text" class="tri-input" v-model="client" />
 			</div>
 			<div class="tri-input-div">	
 				<label for="defaut-input" class="tri-label">Defaut</label>
-				<input id="defaut-input" type="text" class="tri-input" v-model="defaut">
+				<input id="defaut-input" type="text" class="tri-input" v-model="defaut" />
 			</div>
 			<div class="tri-input-div">	
 				<label for="a-trier-input" class="tri-label">A trier</label>
-				<input id="a-trier-input" type="number" class="tri-input" v-model="a_trier">
+				<input id="a-trier-input" type="number" min="0" class="tri-input" v-model="a_trier" />
 			</div>	
 			<div class="tri-input-div">
-				<label for="bonnes-input" class="tri-label">Bonnes</label>
-				<input id="bonnes-input" type="number" class="tri-input" v-model="bonnes">
+				<label for="bonnes-input" class="tri-label">Bons</label>
+				<input id="bonnes-input" type="number" min="0" class="tri-input" v-model="bonnes" />
 			</div>
 			<div class="tri-input-div">	
 				<label for="mauvais-input" class="tri-label">Mauvais</label>
-				<input id="mauvais-input" type="number" class="tri-input" v-model="mauvaises">
+				<input id="mauvais-input" type="number" min="0" class="tri-input" v-model="mauvaises" />
 			</div>
 			<div class="tri-input-div">
 				<label for="est-trie-input" class="tri-label">Est Trié</label>
-				<input id="est-trie-input" type="checkbox" class="tri-input" v-model="est_trie" style="width: auto;">
+				<input id="est-trie-input" type="checkbox" class="tri-input" v-model="est_trie" />
 			</div> 
 			<button @click="postTri">Post</button> 
 		</div>
@@ -56,9 +58,14 @@
 import { ref, reactive, onMounted, computed } from	'vue';
 import axios from 'axios'
 
+import Logo from './Logo.vue'
+
+import { getDate } from '../assets/utils.js'
+
 export default {
 	name: 'Tri',
 	components: {
+		Logo,
 	},
 	setup()
 	{
@@ -92,7 +99,6 @@ export default {
 
 
 		let postTri = ()=>{
-			
 			if (bool_erreur_champ.value){ //si les champs ne sont pas remplis 
 				champs_non_remplis.value = true;
 			}
@@ -112,15 +118,22 @@ export default {
 				a_trier:a_trier.value,
 				bonnes:bonnes.value,
 				mauvaises:mauvaises.value,
-				date:Date.now(),
+				date: getDate(),
 				est_trie: est_trie.value,
 			})
-				.then(response=>{console.log("sd")})
+				.then(response=>{
+					of.value = "";
+					symbole.value = "";
+					client.value = "";
+					defaut.value = "";
+					a_trier.value = 0;
+					bonnes.value = 0;
+					mauvaises.value = 0;
+					est_trie.value = false;
+				})
 				.catch(err=>{console.log('err:' +err)})
 			
 		}
-
-		console.log(data);
 
 
 		return{
@@ -149,6 +162,12 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	font-size: 45px;
+
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%); /* Centre l'élément */
+
 }
 
 #erreur-container{
@@ -195,11 +214,25 @@ export default {
 	flex-direction: column;	
 	justify-content: center;
 	align-items: center;
+
+	border-radius: 5px;
 }
 
 #post-tri-container button {
 	width: 100%;
 	font-size: inherit;
+
+	border-radius: 3px;
+}
+
+#post-tri-container button:hover {
+	background-color: #fdad5c;
+}
+
+#est-trie-input {
+	width: 2em;
+	height: 2em;
+	transform: translate(0, 40%);
 }
 
 .tri-input{

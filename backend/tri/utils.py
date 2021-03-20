@@ -26,12 +26,18 @@ def insert_fichier(path: str, data):
 
 	print(list_data)	
 
-	max_column = ws.max_column
+	max_rows = ws.max_row
 
 	for row in range(len(list_data)):
 		for col in range(len(list_data)):
 			n = number_to_col(col)
-			ws.cell(row=row+1, column=max_column+1, value=list_data[row])
+			value = list_data[col]
+
+			if col==8:
+				value = "Oui" if value==True else "Non"
+
+			ws.cell(row=max_rows+1, column=col+1, value=value)
+
 
 	wb.save(filename=path)
 	wb.close()
@@ -44,13 +50,14 @@ def creer_fichier(path: str):
 	ws = new_workbook.active
 
 	ws["A1"] = "OF"
-	ws["A2"] = "Symbole"
-	ws["A3"] = "Client"
-	ws["A4"] = "Défaut"
-	ws["A5"] = "A trier"
-	ws["A6"] = "Bonnes"
-	ws["A7"] = "Mauvaises"
-	ws["A8"] = "Date"
-	ws["A9"] = "Est trié?"
+	ws["B1"] = "Symbole"
+	ws["C1"] = "Client"
+	ws["D1"] = "Défaut"
+	ws["E1"] = "A trier"
+	ws["F1"] = "Bonnes"
+	ws["G1"] = "Mauvaises"
+	ws["H1"] = "Date"
+	ws["I1"] = "Est trié?"
 
 	new_workbook.save(path)
+
