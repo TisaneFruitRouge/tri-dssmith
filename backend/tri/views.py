@@ -7,8 +7,11 @@ from rest_framework.views import APIView
 from .models import Tri
 from .serializers import TriSerializer
 
-import xlsxwriter
+from .utils import insert_fichier, creer_fichier
 
+import openpyxl
+from datetime import date
+import os.path
 
 class TriView(APIView):
 
@@ -24,33 +27,23 @@ class TriView(APIView):
 		
 		if serializer.is_valid():
 			serializer.save()
+			# Création d fichier / Insertion dans le fichier excel 
 
-			'''new_excel_path = "../excel/"+str(data["date"])+"_"+data["of"]+".xlsx"
-			new_workbook = xlsxwriter.Workbook(new_excel_path)
-			new_worksheet = new_workbook.add_worksheet()
+			current_date  = date.today()
+			current_month = current_date.month
+			current_year  = current_date.year
+ 
+			excel_path = "../excel/"+str(current_month)+"_"+str(current_year)+".xlsx"
 			
 
-			data_items = data.items()
+			if (not os.path.isfile(excel_path)):
+				# Le fichier n'existe pas encore
+				creer_fichier(excel_path)
 
-			data_keys = list(data)
-
-			taille_data = len(data_items)
-			
+			insert_fichier(excel_path, data)
 
 
-			list_data = [[0 for x in range(2)] for y in range(taille_data)] 
-
-			for i in range(len(data_items)):
-				list_data[i][0] = data_keys[i]
-				list_data[i][1] = data[data_keys[i]]
-
-			print(list_data)	
-
-			for row in range(len(list_data)):
-				for col in range(len(list_data[row])):
-					new_worksheet.write(col, row, list_data[row][col])
-
-			new_workbook.close()'''
+			### Fin création / insertion
 
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		
