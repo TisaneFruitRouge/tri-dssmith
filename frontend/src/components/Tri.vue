@@ -66,14 +66,14 @@ export default {
 		let data = reactive({}) 
 
 
-		let of				= ref("");
+		let of		  = ref("");
 		let symbole	  = ref("");
-		let client		= ref("");
-		let defaut		= ref("");
+		let client	  = ref("");
+		let defaut    = ref("");
 		let a_trier	  = ref(0);
-		let bonnes		= ref(0);
+		let bonnes	  = ref(0);
 		let mauvaises = ref(0);
-		let est_trie	= ref(false);
+		let est_trie  = ref(false);
 
 		let champs_non_remplis = ref(false);
 		let erreur_bons_mauvais = ref(false);
@@ -92,12 +92,6 @@ export default {
 
 
 		let postTri = ()=>{
-      console.log(bool_erreur_champ.value)
-      console.log(of.value)
-      console.log(symbole.value)
-      console.log(client.value)
-      console.log(defaut.value)
-      console.log(a_trier.value)
 			if (bool_erreur_champ.value){ //si les champs ne sont pas remplis 
 				champs_non_remplis.value = true;
 			}
@@ -153,6 +147,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	font-size: 45px;
 }
 
 #erreur-container{
@@ -189,8 +184,21 @@ export default {
 	margin: 10px;
 }
 
+#post-tri-container {
+	background-color: #EAEAEA;
+	-webkit-box-shadow: 3px 4px 5px 3px rgba(0,0,0,0.75);
+	-moz-box-shadow: 3px 4px 5px 3px rgba(0,0,0,0.75);
+	box-shadow: 3px 4px 5px 3px rgba(0,0,0,0.75);
+	width: 12em;
+	display: flex;
+	flex-direction: column;	
+	justify-content: center;
+	align-items: center;
+}
+
 #post-tri-container button {
 	width: 100%;
+	font-size: inherit;
 }
 
 .tri-input{
@@ -201,12 +209,17 @@ export default {
 	display: flex;
 	flex-direction: row; 
 	margin-top: 5px;
+	gap: 2em;
 }
 
 .tri-label {
-	width: 5em;
+	width: 4em;
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.tri-label:hover {
+	background-color: lightgray;
 }
 
 </style>
