@@ -16,11 +16,11 @@
 		<div id="post-tri-container">
 			<div class="tri-input-div">
 				<label for="of-input" class="tri-label">OF</label>
-				<input id="of-input" type="text" class="tri-input" v-model="of" />
+				<input id="of-input" type="text" :class=" OF_OK(of) ? 'tri-input' : 'tri-input-error' " v-model="of" />
 			</div>
 			<div class="tri-input-div">
 				<label for="symbol-input" class="tri-label">Symbole</label>
-				<input id="symbol-input" type="text" class="tri-input" v-model="symbole" />
+				<input id="symbol-input" type="text" :class=" Symbole_OK(symbole) ? 'tri-input' : 'tri-input-error' " v-model="symbole" />
 			</div>
 			<div class="tri-input-div">	
 				<label for="client-input" class="tri-label">Client</label>
@@ -98,6 +98,21 @@ export default {
 		})
 
 
+
+		// Check validité des champs OF et Symbole
+
+		let OF_OK = (OF)=>{
+			let reg = /\d{8,8}[a,b]?$/
+			return OF.match(reg);
+		}
+
+		let Symbole_OK = (symbole)=>{
+			let reg = /[A-Z]{2,2}\d{1,2}$/
+			return symbole.match(reg);
+		}
+
+
+
 		let postTri = ()=>{
 			if (bool_erreur_champ.value){ //si les champs ne sont pas remplis 
 				champs_non_remplis.value = true;
@@ -150,6 +165,9 @@ export default {
 
 			champs_non_remplis,
 			erreur_bons_mauvais,
+
+			OF_OK,
+			Symbole_OK,
 
 		}
 	}
@@ -239,6 +257,12 @@ export default {
 	width: 10em;
 }
 
+.tri-input-error{
+	width: 10em;
+	border: solid IndianRed; 
+	background-color: MistyRose;
+}
+
 .tri-input-div{
 	display: flex;
 	flex-direction: row; 
@@ -246,11 +270,13 @@ export default {
 	gap: 2em;
 }
 
+
 .tri-label {
 	width: 4em;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
+
 
 .tri-label:hover {
 	background-color: lightgray;
